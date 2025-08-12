@@ -1,0 +1,6 @@
+Reducir YO y confirmar que se haya traducido al inglés.
+
+Y O = (λf.(λx.f (x x)) (λx.f (x x))) (λx.λy.y)
+(λx.(λx.λy.y) (x x)) (λx.(λx.λy.y) (x x))
+(λx.λy.y) ((λx.(λx.λy.y) (x x)) (λx.(λx.λy.y) (x x))))
+λy.y = I tick

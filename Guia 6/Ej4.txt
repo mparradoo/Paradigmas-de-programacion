@@ -1,0 +1,45 @@
+Probar que:
+
+-C I = λy z.z y
+C I
+(λx.λy.λz.xzy) λx.x
+λy.λz.(λx.x) z y
+λy.λz.z y   tick
+
+
+
+
+
+
+-K I = O
+(λx.λy.x) λx.x = λx.λy.y
+Resuelvo izq
+λy.λx.x
+λw.λx.x
+λw.λy.y
+λx.λy.y  tick
+
+
+
+
+
+
+
+
+
+S (K S) K = B
+(λx.λy.λz.x z (y z)) ((λx.λy.x) (λx.λy.λz.x z (y z))) (λx.λy.x) = λx.λy.λz.x
+(λy.λz.((λx.λy.x) (λx.λy.λz.x z (y z))) z (y z)) (λx.λy.x)
+λz.(λx.λy.x) (λx.λy.λz.x z (y z)) z ((λx.λy.x) z)
+λz.(λy.λx.λy.λz.x z (y z)) z ((λx.λy.x) z)
+λz.(λx.λy.λz.x z (y z)) ((λx.λy.x) z)
+λz.λy.λw.(λx.λy.x) z w (y w)
+λz.λy.λw.(λy.z) w (y w)
+λz.λy.λw.z (y w)
+λx.λy.λw.x (y w)
+λx.λy.λz.x (y z) = B tick
+
+
+
+
+

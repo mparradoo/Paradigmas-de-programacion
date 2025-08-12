@@ -1,0 +1,99 @@
+Para las siguientes expresiones lambda:
+
+Identificar las ocurrencias de variables libres y ligadas.
+Reducir a su forma normal aplicando las reglas alfa, beta y eta, utilizando orden normal y orden aplicativo, y comparar los resultados.
+
+
+
+-( λx.( ( λ y.y ) x ) ) z
+Orden normal: primero el de mas a la izquierda
+( λ y.y ) z
+z
+Orden aplicativo: primero el de adentro
+( λx.x) z
+z
+
+
+
+-( λx.λy.x y ) ( z y )
+Orden normal:
+( λx.λw.x w ) ( z y )    alfa para que no se liga y
+λw.z y w
+zy
+
+Orden aplicativo:
+( λx.λw.x w ) ( z y )    alfa para que no se liga y
+λw.z y w
+zy
+
+
+-( λx.λy.x ) x y
+Orden normal:
+((λx.λy.x) x) y
+(λy.x) y --> recibe y pero en el cuerpo solo hay x
+x
+
+Orden aplicativo:
+(λy.x) y
+x
+
+
+
+-(λx.((λz.z x) (λx.x))) y
+Orden normal:
+(λz.z y) λx.x
+(λx.x)y
+y
+Orden aplicativo:
+(λx.(λx.x) x) y
+(λx.x) y
+y
+
+
+
+
+-(λx.((λy.xy) z)) (λx.x y)
+Orden normal:
+(λx.((λw.xw) z)) (λx.x y)
+(λw.(λx.x y) w) z
+(λx.x y) z
+z y
+Orden aplicativo:
+(λx.x z) (λx.x y)
+(λx.x y) z
+z y
+
+
+-((λy.(λx.((λx.λy.x) x)) y) M) N
+Orden normal:
+(λx.λy.x) M N
+λyM N
+M
+Orden aplicativo:
+(λy.(λx.(λy.x)) y) M N
+(λy.(λx.(λw.x)) y) M N
+(λy.λw.y) M N
+(λw.M) N
+M
+
+
+-(λx.λy.λx.x y z) (λx.λy.y) M N
+Orden normal:
+(λy.λx.x y z) M N
+(λx.x M z) N
+N M z
+Orden aplicativo:
+(λy.λx.x y z) M N
+(λx.x M z) N
+N M z
+
+
+
+-((λx.(λy.λz.z) x) ((λx.x x x) (λx.x x x))) x
+Orden normal:
+(λy.λz.z) ((λx.x x x) (λx.x x x))) x --> la funcion no tiene parametro y
+(λz.z) x
+x
+Orden aplicativo:
+no tiene solucion (ciclo infinito). apuntes.
+

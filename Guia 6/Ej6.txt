@@ -1,0 +1,82 @@
+Verificar que:
+
+
+
+-Pred 5 = 4
+
+Predecesor de un número:
+Pred = λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)
+
+(λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)) (λf.λx.f (f (f (f (f x)))))
+Aplicando 15 veces la regla beta, se reduce a λf.λx.f (f (f (f x))) = 4
+
+
+
+
+-IsZero 2 = False
+(λn.n (λz.λx.λy.y) (λx.λy.x)) (λf.λx.f (f x))
+
+(λf.λx.f (f x)) (λz.λx.λy.y) (λx.λy.x) beta
+(λx.(λz.λx.λy.y) ((λz.λx.λy.y) x)) (λx.λy.x) beta
+(λz.λx.λy.y) ((λz.λx.λy.y) (λx.λy.x)) beta
+λx.λy.y = False
+
+
+-Add 2 3 = 5
+(λm.λn.λf.λx.m f (n f x)) (λf.λx.f (f x)) (λf.λx.f (f (f x)))
+
+(λn.λf.λx.(λf.λx.f (f x)) f (n f x)) (λf.λx.f (f (f x))) beta
+λf.λx.(λf.λx.f (f x)) f ((λf.λx.f (f (f x))) f x) beta
+λf.λx.(λx.f (f x)) ((λf.λx.f (f (f x))) f x) beta
+λf.λx.f (f ((λf.λx.f (f (f x))) f x)) beta
+λf.λx.f (f ((λx.f (f (f x))) x)) beta
+λf.λx.f (f (f (f (f x)))) = 5
+
+
+
+-Sub 3 1 = 2
+(λm.λn.n (λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)) m) (λf.λx.f (f (f x))) (λf.λx.f x)
+Aplicando 15 veces la regla beta, se reduce a λf.λx.f (f x) = 2
+
+
+-Mul 2 3 = 6
+(λm.λn.λf.λx.m (n f) x) (λf.λx.f (f x)) (λf.λx.f (f (f x)))
+
+(λn.λf.λx.(λf.λx.f (f x)) (n f) x) (λf.λx.f (f (f x))) beta
+λf.λx.(λf.λx.f (f x)) ((λf.λx.f (f (f x))) f) x beta
+λf.λx.(λx.(λf.λx.f (f (f x))) f ((λf.λx.f (f (f x))) f x)) x beta
+λf.λx.(λf.λx.f (f (f x))) f ((λf.λx.f (f (f x))) f x) beta
+λf.λx.(λx.f (f (f x))) ((λf.λx.f (f (f x))) f x) beta
+λf.λx.f (f (f ((λf.λx.f (f (f x))) f x))) beta
+λf.λx.f (f (f ((λx.f (f (f x))) x))) beta
+λf.λx.f (f (f (f (f (f x))))) = 6
+
+
+
+-Div 6 2 = 3
+(λn.((λf.(λx.f (x x)) (λx.f (x x))) (λc.λn.λm.λf.λx.(λd.(λp.λq.λr.p q r) ((λn.n (λz.(λx.λy.y))
+(λx.λy.x)) d) ((λf.λx.x) f x) (f (c d m f x))) ((λm.λn.n (λn.λf.λx.n (λg.λh.h (g f)) (λu.x)
+(λu.u)) m) n m))) ((λn.λf.λx.f (n f x)) n)) (λf.λx.f (f (f (f (f (f x)))))) (λf.λx.f (f x))
+
+Aplicando 352 veces la regla beta, se reduce a λf.λx.f (f (f x)) = 3
+
+
+-Pow 2 3 = 8
+(λm.λn.λf.λx.n m f x) (λf.λx.f (f x)) (λf.λx.f (f (f x)))
+Aplicando 18 veces la regla beta, se reduce a λf.λx.f (f (f (f (f (f (f (f x))))))) = 8
+
+
+
+-Fibo 6 = 8
+(λn.n (λf.λa.λb.f b ((λm.λn.λf.λx.m f (n f x)) a b)) (λx.λy.x) (λf.λx.x) (λf.λx.f x))
+(λf.λx.f (f (f (f (f (f x))))))
+Aplicando 95 veces la regla beta, se reduce a λf.λx.f (f (f (f (f (f (f (f x))))))) = 8
+
+
+
+-Fact 3 = 6
+((λf.(λx.f (x x)) (λx.f (x x))) (λf.λx.( λp.λq.λr.p q r) ((λn.n (λz.(λx.λy.y))
+(λx.λy.x)) x) (λf.λx.f x) ((λm.λn.λf.λx.m (n f) x) x (f ((λn.λf.λx.n (λg.λh.h (g f))
+(λu.x) (λu.u)) x))))) (λf.λx.f (f (f x)))
+
+Aplicando 704 veces la regla beta, se reduce a λf.λx.f (f (f (f (f (f x))))) = 6

@@ -1,0 +1,14 @@
+Definir en Cálculo Lambda las siguientes operaciones lógicas: NOR, NAND, XNOR, y verificar para cada una su tabla de verdad.
+
+
+
+
+NOR:
+λp.λq.p True q False True
+
+
+NAND:
+λp.λq.p q False False True
+
+XNOR:
+λp.λq.p (q False True) q False True

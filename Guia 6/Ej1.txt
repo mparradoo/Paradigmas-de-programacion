@@ -1,0 +1,13 @@
+Escribir las siguientes expresiones con el menor número de paréntesis posible:
+
+-(λx.(λy.(λz.((x z) (y z)))))
+λx.λy.λz.x z (y z)
+
+
+
+-a b (c d) (e f (g h))
+
+
+
+
+-(λx.(λy.y x) (λv.v) z u) λw.w

@@ -1,0 +1,16 @@
+¿Por qué a (Y K) se lo conoce como el Pac-Man? Reducir (Y K) a b c d usando la estrategia Call-by-name.
+
+
+A (Y K) se lo conoce como el Pac-Man porque, aplicándole la regla beta tres veces, se
+convierte en una expresión lambda en forma normal, la cual es capaz de “comerse”
+un argumento y volver a la forma normal en solo tres aplicaciones de la regla beta:
+(Y K) = ((λf.(λx.f (x x)) (λx.f (x x))) (λx.λy.x))
+(λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x)) beta
+(λx.λy.x) ((λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x))) beta
+λy.(λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x)) beta
+(λy.(λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x))) a
+(λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x)) beta
+(λx.λy.x) ((λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x))) beta
+λy.(λx.(λx.λy.x) (x x)) (λx.(λx.λy.x) (x x)) beta
+((λf.(λx.f (x x)) (λx.f (x x))) (λx.λy.x)) a b c d
+Aplicando 15 veces la regla b
