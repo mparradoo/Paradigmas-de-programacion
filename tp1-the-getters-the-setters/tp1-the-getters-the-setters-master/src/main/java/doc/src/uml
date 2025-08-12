@@ -1,0 +1,197 @@
+@startuml
+package Game {
+    ' Definición de clases, interfaces y enumeraciones
+    class App {
+        +main(args: String[])
+        +start(primaryStage: Stage)
+    }
+
+    package Model {
+        class Game {
+            +currentState: State
+            +startLevel(cols: int, rows: int, numRobots: int, numResources: int)
+            +nextLevel(cols: int, rows: int, numRobots: int, numResources: int)
+            +nextTurn()
+            +queuePlayerMove(d: Direction)
+            +queuePlayerTeleport(tp: TeleportType)
+            +getState(): State
+            +getBoard(): Board
+            +getLevel(): int
+            +getTotalScore(): int
+        }
+
+        class Player {
+            +tryStep(direction: Direction)
+            +queueMove(d: Direction)
+            +queueTeleport(tp: TeleportType)
+            +addSafeTeleport()
+            +teleportToPosition(env: Environment, to: Position)
+            +getSafeTeleports(): int
+        }
+
+        abstract class Robot {
+            +tryStep(direction: Direction)
+            +position: Position
+            +speed(): int
+        }
+
+        class Position {
+            +move(direction: Direction): Position
+            +getX(): int
+            +getY(): int
+        }
+
+        enum Direction {
+            UP
+            DOWN
+            RIGHT
+            LEFT
+            UP_LEFT
+            UP_RIGHT
+            DOWN_LEFT
+            DOWN_RIGHT
+            NONE
+        }
+
+        enum State {
+            PLAYING
+            LEVEL_COMPLETED
+            GAME_OVER
+        }
+
+        class Board {
+            +addResource(p: Position)
+            +getCell(p: Position): Cell
+            +setPlayer(p: Player)
+            +getPlayer(): Player
+            +addRobot(r: Robot)
+            +getRobots(): List<Robot>
+        }
+
+        class Cell {
+            +isOnFire(): boolean
+            +setOnFire(onFire: boolean)
+            +isHasResources(): boolean
+            +setHasResources(hasResources: boolean)
+            +collectResource()
+            +setEntity(entity: Entity)
+            +deleteEntity()
+            +hasEntity(): boolean
+            +getPosition(): Position
+        }
+
+        class Environment {
+            +tryStep(e: Entity, to: Position): boolean
+            +getPlayerPos(): Position
+            +randomEmpty(): Position
+            +teleport(e: Entity, to: Position)
+            +teleportRandom(e: Entity)
+        }
+
+        interface Entity {
+            +getPosition(): Position
+            +setPosition(p: Position)
+            +act(env: Environment)
+            +isDeadly(): boolean
+            +isPlayable(): boolean
+            +accept(visitor: EntityVisitor)
+        }
+
+        interface GameObserver {
+            +onModelUpdate()
+        }
+
+        interface EntityVisitor {
+            +visit(player: Player)
+            +visit(robot: Robotx1)
+            +visit(robot: Robotx2)
+        }
+
+        class Robotx1 {
+            +speed(): int
+        }
+
+        class Robotx2 {
+            +speed(): int
+        }
+
+        enum TeleportType {
+            RANDOM_TELEPORT
+            SAFE_TELEPORT
+        }
+    }
+
+    package View {
+        class GameOverScreen {
+            +GameOverScreen()
+        }
+
+        class Sprite {
+            +index: int
+            +imagePath: String
+            +getSprite(): Image
+        }
+
+        class MenuScreen {
+            +show()
+        }
+
+        class SpriteIndexVisitor {
+            +getSpriteIndex(entity: Entity): int
+        }
+
+        class BoardView {
+            +onModelUpdate()
+            +draw()
+            +getCellSize(): int
+        }
+
+        class GameView {
+            +show()
+            -buildUI()
+            -handleMovement()
+            -showGameOverScreen()
+        }
+    }
+
+    ' Relaciones entre clases
+    App --> Model.Game
+
+    Model.Game *-- Model.Player
+    Model.Game *-- Model.Robot
+    Model.Game --> Model.GameObserver
+    Model.Game ..> Model.State
+
+    Model.Entity ..> Model.Position
+    Model.Entity ..> Model.Environment
+    Model.Position ..> Model.Direction
+
+    Model.Player ..> Model.Direction
+
+    View.GameView ..> Model.Game
+    View.GameView --> View.BoardView
+    View.GameView ..> Model.Direction
+    View.GameView ..> Model.State
+
+    Model.Board *-- Model.Cell
+    Model.Board ..|> Model.Environment
+
+    View.BoardView --> Model.Board
+    View.BoardView --> View.MenuScreen
+    View.BoardView --> View.GameOverScreen
+    View.BoardView --> View.Sprite
+    View.Sprite ..> View.SpriteIndexVisitor
+
+    Model.Player ..> Model.TeleportType
+    Model.Game ..> Model.TeleportType
+
+    Model.Robotx1 --|> Model.Robot
+    Model.Robotx2 --|> Model.Robot
+
+    Model.Player ..|> Model.Entity
+    Model.Robot ..|> Model.Entity
+    Model.Entity ..> Model.EntityVisitor
+
+    View.SpriteIndexVisitor ..|> Model.EntityVisitor
+    View.BoardView ..|> Model.GameObserver
+@enduml
